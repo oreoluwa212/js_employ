@@ -77,12 +77,6 @@ header img:hover {
   flex: 0 1 250px;
 }
 
-.card:hover {
-  background-color: #11071f;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
 .card-label {
   font-size: 1.2rem;
   font-weight: bold;
@@ -126,13 +120,6 @@ header img:hover {
 #page-info {
   font-weight: bold;
   margin: 0 10px;
-}
-
-.card:hover .card-label,
-.card:hover p,
-body.dark-mode .card:hover .card-label,
-body.dark-mode .card:hover p {
-  color: #fff;
 }
 
 body.dark-mode .card {
@@ -460,6 +447,16 @@ input[type="url"]:focus {
   outline: none;
 }
 
+.cta-button-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.latest {
+  color: var(--primary);
+}
 .btn-blog {
   padding: 16px;
   width: 100%;
