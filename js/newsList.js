@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
     const utcString = now.toUTCString().split(" ");
     currentTimeUTC.textContent = utcString[4];
-    currentDay.textContent = `${utcString[0]}, ${utcString[2]} ${utcString[1]} ${utcString[3]}`;
+    currentDay.textContent = `${utcString[0]} ${utcString[2]} ${utcString[1]} ${utcString[3]}`;
   }
 
   updateTime();

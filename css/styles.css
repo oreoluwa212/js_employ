@@ -38,6 +38,10 @@ body.dark-mode {
   gap: 20px;
 }
 
+.top-time p {
+  color: var(--primary);
+}
+
 .header-img-div {
   width: 100%;
   padding: 1rem 0;
