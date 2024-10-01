@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/newsDetail.css" />
+    <title>News Details | Blogs</title>
+  </head>
+  <body class="light-mode">
+    <header class="header">
+      <nav>
+        <a href="/index.html" style="text-decoration: none; color: inherit">
+          <h2 class="brand">OREOLUWA RUTH AJAYI</h2>
+        </a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div id="news-detail">
+        <h1 id="news-title"></h1>
+        <p id="news-description"></p>
+        <div id="author-details" class="author-info">
+          <img id="author-avatar" src="" alt="Author Avatar" />
+          <span id="author-name"></span>
+        </div>
+        <div class="swiper-container" id="image-slider"></div>
+
+        <h2>Comments</h2>
+        <div id="comments-container"></div>
+        <form id="comment-form">
+          <textarea
+            id="comment-text"
+            required
+            placeholder="Write your comment..."
+          ></textarea>
+          <button type="submit">Add Comment</button>
+        </form>
+        <form id="update-news-form">
+          <input
+            type="text"
+            id="update-title"
+            placeholder="Update Title"
+            required
+          />
+          <textarea
+            id="update-description"
+            placeholder="Update Description"
+            required
+          ></textarea>
+          <button type="submit">Update News</button>
+        </form>
+      </div>
+    </main>
+
+    <footer id="links">
+      <ul>
+        <li>
+          <a
+            href="https://hng.tech/learn"
+            target="_blank"
+            rel="noopener noreferrer"
+            >HNG Learn</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://keyword.dog"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Keyword Dog</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://scrapeanyweb.site"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Scrape Any Web</a
+          >
+        </li>
+      </ul>
+      <p>&copy; 2024. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="./js/newsDetail.js"></script>
+  </body>
+</html>
