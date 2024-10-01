@@ -13,18 +13,6 @@ You can view the live application [here](https://js-pre-employ.vercel.app).
 
 The source code for this project can be found on GitHub: [js_employ](https://github.com/oreoluwa212/js_employ).
 
-## Table of Contents
-
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Setup Instructions](#setup-instructions)
-
-## Features
-
-- Create, read, update, and delete job listings.
-- Manage applications for job listings.
-- User-friendly interface with responsive design.
-
 ## Technologies Used
 
 - HTML
