@@ -11,9 +11,16 @@ async function loadNews(page) {
   displayNews(newsItems);
 }
 
-function displayNews(newsItems) {
+async function displayNews(newsItems) {
   newsList.innerHTML = "";
-  newsItems.forEach((news) => {
+
+  for (const news of newsItems) {
+    const imageResponse = await fetch(
+      `https://61924d4daeab5c0017105f1a.mockapi.io/skaet/v1/news/${news.id}/images`
+    );
+    const images = await imageResponse.json();
+    const imageUrl = images.length > 0 ? images[0].image : "";
+
     const newsElement = document.createElement("div");
     newsElement.classList.add("card");
     newsElement.innerHTML = `
@@ -23,12 +30,63 @@ function displayNews(newsItems) {
       <p class="card-head">By ${news.author}</p>
       <p>${
         news.description ||
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque..."
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       }</p>
-      <a href="news.html?id=${news.id}" class="read-more">Read More</a>
+      ${
+        imageUrl
+          ? `<img src="${imageUrl}" alt="${news.title} image" class="news-image" />`
+          : ""
+      }
+      <div class="mb-4"></div>
+      <div class="flex flex-col">
+        <a href="news.html?id=${news.id}" class="read-more">Read More</a>
+        <button class="edit-btn" aria-label="Edit" data-id="${
+          news.id
+        }" data-title="${news.title}" data-author="${
+      news.author
+    }" data-description="${news.description}">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="delete-btn" aria-label="Delete" data-id="${news.id}">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
     `;
     newsList.appendChild(newsElement);
+  }
+
+  document.querySelectorAll(".edit-btn").forEach((btn) => {
+    btn.addEventListener("click", handleEdit);
   });
+
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", handleDelete);
+  });
+}
+
+async function handleDelete(event) {
+  const newsId = event.target.closest("button").getAttribute("data-id");
+
+  if (confirm("Are you sure you want to delete this news item?")) {
+    try {
+      const response = await fetch(
+        `https://61924d4daeab5c0017105f1a.mockapi.io/skaet/v1/news/${newsId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      alert("News item deleted successfully.");
+      loadNews(currentPage);
+    } catch (error) {
+      console.error("Failed to delete news:", error.message);
+      alert("Failed to delete the news item. Please try again.");
+    }
+  }
 }
 
 prevBtn.addEventListener("click", () => {
@@ -102,27 +160,112 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document
   .getElementById("news-form")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const title = document.getElementById("news-title").value;
     const author = document.getElementById("news-author").value;
-    const url = document.getElementById("news-url").value;
+    const description = document.getElementById("news-description").value;
 
-    const newCard = document.createElement("div");
-    newCard.className = "card";
-    newCard.innerHTML = `
-    <h2 class="card-label">${title}</h2>
-    <p>
-      This is a new blog post created by ${author}. You can add more details or content here...
-    </p>
-    <a href="${url}" class="read-more">Read More</a>
-  `;
+    const newPost = {
+      title,
+      author,
+      description,
+    };
 
-    const newsList = document.getElementById("news-list");
-    newsList.prepend(newCard);
+    try {
+      const response = await fetch(
+        "https://61924d4daeab5c0017105f1a.mockapi.io/skaet/v1/news",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPost),
+        }
+      );
 
-    document.getElementById("news-form").reset();
+      if (response.ok) {
+        const createdPost = await response.json();
 
-    document.getElementById("modal").classList.add("hidden");
+        const newCard = document.createElement("div");
+        newCard.className = "card";
+        newCard.innerHTML = `
+        <h2 class="card-label">${createdPost.title}</h2>
+        <p>By ${createdPost.author}</p>
+        <p>${createdPost.description}</p>
+        <a href="news.html?id=${createdPost.id}" class="read-more">Read More</a>
+      `;
+
+        const newsList = document.getElementById("news-list");
+        newsList.prepend(newCard);
+
+        document.getElementById("news-form").reset();
+        document.getElementById("modal").classList.add("hidden");
+
+        alert("Blog post created successfully!");
+      } else {
+        console.error("Error creating new blog post");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   });
+
+function handleEdit(event) {
+  const newsId = event.target.closest("button").getAttribute("data-id");
+  const newsTitle = event.target.getAttribute("data-title");
+  const newsAuthor = event.target.getAttribute("data-author");
+  const newsDescription = event.target.getAttribute("data-description");
+
+  document.getElementById("edit-news-id").value = newsId;
+  document.getElementById("edit-news-title").value = newsTitle;
+  document.getElementById("edit-news-author").value = newsAuthor;
+  document.getElementById("edit-news-description").value = newsDescription;
+
+  document.getElementById("edit-modal").classList.remove("hidden");
+}
+
+document
+  .getElementById("edit-news-form")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const id = document.getElementById("edit-news-id").value;
+    const title = document.getElementById("edit-news-title").value;
+    const author = document.getElementById("edit-news-author").value;
+    const description = document.getElementById("edit-news-description").value;
+
+    const updatedPost = {
+      title,
+      author,
+      description,
+    };
+
+    try {
+      const response = await fetch(
+        `https://61924d4daeab5c0017105f1a.mockapi.io/skaet/v1/news/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedPost),
+        }
+      );
+
+      if (response.ok) {
+        alert("News item updated successfully.");
+        loadNews(currentPage);
+        document.getElementById("edit-modal").classList.add("hidden");
+      } else {
+        console.error("Error updating news item");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  });
+
+document.getElementById("close-edit-modal").addEventListener("click", () => {
+  document.getElementById("edit-modal").classList.add("hidden");
+});

@@ -115,10 +115,48 @@
           <input type="text" id="news-title" placeholder="Title" required />
           <input type="text" id="news-author" placeholder="Author" required />
           <input type="url" id="news-url" placeholder="URL" required />
+          <textarea
+            id="news-description"
+            placeholder="Description"
+            required
+          ></textarea>
           <button type="submit" class="btn-blog">Submit</button>
         </form>
       </div>
     </div>
+
+    <!-- Edit modal for editing an existing blog post -->
+    <div id="edit-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeEditModal">&times;</span>
+        <h1>Edit News</h1>
+        <form id="edit-news-form">
+          <input type="hidden" id="edit-news-id" />
+          <input
+            type="text"
+            id="edit-news-title"
+            placeholder="Title"
+            required
+          />
+          <input
+            type="text"
+            id="edit-news-author"
+            placeholder="Author"
+            required
+          />
+          <textarea
+            id="edit-news-description"
+            placeholder="Description"
+            required
+          ></textarea>
+          <button type="submit" class="btn-blog">Save Changes</button>
+          <button type="button" class="btn-blog" id="close-edit-modal">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+
     <script src="./js/newsList.js"></script>
     <script>
       const modal = document.getElementById("modal");
@@ -138,6 +176,29 @@
           modal.classList.add("hidden");
         }
       });
+
+      const editModal = document.getElementById("edit-modal");
+      const closeEditModalButton = document.getElementById("closeEditModal");
+      const closeEditModalCancelButton =
+        document.getElementById("close-edit-modal");
+
+      closeEditModalButton.addEventListener("click", () => {
+        editModal.classList.add("hidden");
+      });
+
+      closeEditModalCancelButton.addEventListener("click", () => {
+        editModal.classList.add("hidden");
+      });
+
+      // Function to open the edit modal and fill in the existing data (you may add this where you handle the edit action)
+      function openEditModal(news) {
+        document.getElementById("edit-news-id").value = news.id;
+        document.getElementById("edit-news-title").value = news.title;
+        document.getElementById("edit-news-author").value = news.author;
+        document.getElementById("edit-news-description").value =
+          news.description;
+        editModal.classList.remove("hidden");
+      }
     </script>
   </body>
 </html>

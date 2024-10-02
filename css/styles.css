@@ -93,6 +93,14 @@ header img:hover {
   text-transform: lowercase;
 }
 
+.fa-edit {
+  color: #ff4081;
+}
+
+.fa-trash {
+  color: #dc3545;
+}
+
 /* ========== Pagination Styles ========== */
 .pagination {
   display: flex;
@@ -407,6 +415,21 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .modal-content {
