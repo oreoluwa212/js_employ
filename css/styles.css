@@ -117,7 +117,7 @@ header img:hover {
   border-radius: 5px;
   margin: 0 10px;
   cursor: pointer;
-  transition: background-color 2s;
+  transition: background-color 0.2s;
 }
 
 .pagination button:disabled {
