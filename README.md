@@ -1,5 +1,3 @@
-Here’s a revised version of your `README.md`, reflecting the updated instructions to clone the repository and use Live Server to start the `index.html` file.
-
 ```markdown
 # JS Pre-Employment Test
 
