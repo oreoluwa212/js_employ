@@ -19,7 +19,9 @@ async function displayNews(newsItems) {
       `https://61924d4daeab5c0017105f1a.mockapi.io/skaet/v1/news/${news.id}/images`
     );
     const images = await imageResponse.json();
+    console.log("images", images);
     const imageUrl = images.length > 0 ? images[0].image : "";
+    console.log("imageUrl", imageUrl);
 
     const newsElement = document.createElement("div");
     newsElement.classList.add("card");
